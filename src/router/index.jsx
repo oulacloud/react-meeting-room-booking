@@ -9,12 +9,20 @@ import { Register } from "../components/Register";
 import { Login } from "../components/Login";
 import { ErrorPage } from "../components/ErrorPage";
 import { UpdatePassword } from "../components/UpdatePassword";
+import { Index } from "../views/Index";
+import { UpdateInfo } from "../views/update/update_info";
 
 const routes = [
   {
     path: "/",
-    element: <div>index</div>,
+    element: <Index></Index>,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "update_info",
+        element: <UpdateInfo />,
+      },
+    ],
   },
   {
     path: "login",
@@ -27,7 +35,7 @@ const routes = [
   {
     path: "update_password",
     element: <UpdatePassword />,
-  },
+  }
 ];
 
 const router = createBrowserRouter(routes);
