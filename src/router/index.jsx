@@ -11,6 +11,9 @@ import { ErrorPage } from "../components/ErrorPage";
 import { UpdatePassword } from "../components/UpdatePassword";
 import { Index } from "../views/Index";
 import { UpdateInfo } from "../views/update/update_info";
+import { Menu } from "../views/menu/Menu";
+import { MeetingRoomList } from "../views/meeting_room_list/MeetingRoomList";
+import { BookingHistory } from "../views/booking_history/BookingHistory";
 
 const routes = [
   {
@@ -21,6 +24,24 @@ const routes = [
       {
         path: "update_info",
         element: <UpdateInfo />,
+      },
+      {
+        path: "/",
+        element: <Menu />,
+        children: [
+          {
+            path: "/",
+            element: <MeetingRoomList />,
+          },
+          {
+            path: "meeting_room_list",
+            element: <MeetingRoomList />,
+          },
+          {
+            path: "booking_history",
+            element: <BookingHistory />,
+          },
+        ],
       },
     ],
   },
@@ -35,9 +56,7 @@ const routes = [
   {
     path: "update_password",
     element: <UpdatePassword />,
-  }
+  },
 ];
 
-const router = createBrowserRouter(routes);
-
-export default router;
+export const router = createBrowserRouter(routes);
