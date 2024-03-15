@@ -1,8 +1,9 @@
-import { Badge, Button, Form, Input, Popconfirm, Table, message } from "antd";
+import { Badge, Button, Form, Input, Table, message } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import './meeting_room_list.css';
 import { useForm } from "antd/es/form/Form";
 import { searchMeetingRoomList } from "../../api/interface";
+import { CreateBookingModal } from "./CreateBookingModal";
 
 
 export function MeetingRoomList() {
@@ -10,6 +11,10 @@ export function MeetingRoomList() {
     const [pageSize, setPageSize] = useState(10);
 
     const [meetingRoomResult, setMeetingRoomResult] = useState([]);
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [currentMeetingRoom, setCurrentMeetingRoom] =  useState();
+
 
     const columns = useMemo(() => [
         {
@@ -51,7 +56,10 @@ export function MeetingRoomList() {
             title: '操作',
             render: (_, record) => (
                 <div>
-                    <a href="#">预定</a>
+                    <a href="#" onClick={() => {
+                        setIsCreateModalOpen(true);
+                        setCurrentMeetingRoom(record);
+                    }}>预定</a>
                 </div>
             )
         }
@@ -123,5 +131,14 @@ export function MeetingRoomList() {
                 onChange: changePage
             }}/>
         </div>
+
+        {
+            currentMeetingRoom ? 
+                <CreateBookingModal meetingRoom={currentMeetingRoom} isOpen={isCreateModalOpen} handleClose={() => {
+                    setIsCreateModalOpen(false);
+                }}></CreateBookingModal>
+            : null
+        }
+    
     </div>
 }
